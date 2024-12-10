@@ -46,8 +46,7 @@ resource "azurerm_linux_web_app" "danioazurewebapp" {                         # 
   connection_string {
     name  = "DefaultConnection"
     type  = "SQLAzure"
-    value = "Data Source=tcp:${azurerm_mssql_server.danio_sql.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_mssql_database.daniodb.name};User ID=${azurerm_mssql_server.danio_sql.administrator_login};Password=${azurerm_mssql_server.danio_sql.administrator_login_password};Trusted_Connection=False; MultipleActiveResultSets=True;"
-    #                           resource title    resource name  specific property
+    value = "Data Source=tcp:${azurerm_mssql_server.danio_sql.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_mssql_database.daniodb.name};User ID=${azurerm_mssql_server.danio_sql.administrator_login};Password=${azurerm_mssql_server.danio_sql.administrator_login_password};Trusted_Connection=False;MultipleActiveResultSets=True;"
   }
 }
 
