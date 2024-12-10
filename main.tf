@@ -13,29 +13,29 @@ provider "azurerm" {
   }
 }
 
-resource "random_integer" "ri1" {
+resource "random_integer" "ri" {
   min = 10000 # set min value
   max = 99999 # set max value
 }
 
 resource "azurerm_resource_group" "daniorg" {
-  location = var.resource_group_location                               # set location for resource group
-  name     = "${var.resource_group_name}-${random_integer.ri1.result}" # set name for the group with random integer
+  location = var.resource_group_location                              # set location for resource group
+  name     = "${var.resource_group_name}-${random_integer.ri.result}" # set name for the group with random integer
 }
 
 resource "azurerm_service_plan" "danioappsp" {
-  name                = "${var.app_service_plan_name}-${random_integer.ri1.result}" # set unique name with random integer generator
-  resource_group_name = azurerm_resource_group.daniorg.name                         # set name of the resource
-  location            = azurerm_resource_group.daniorg.location                     # set location of the resource group
-  os_type             = "Linux"                                                     # set OS type
-  sku_name            = "F1"                                                        # set subscription type
+  name                = "${var.app_service_plan_name}-${random_integer.ri.result}" # set unique name with random integer generator
+  resource_group_name = azurerm_resource_group.daniorg.name                        # set name of the resource
+  location            = azurerm_resource_group.daniorg.location                    # set location of the resource group
+  os_type             = "Linux"                                                    # set OS type
+  sku_name            = "F1"                                                       # set subscription type
 }
 
-resource "azurerm_linux_web_app" "danioazurewebapp" {                         # set name of the web app resource - danioazurewebapp
-  name                = "${var.app_service_name}${random_integer.ri1.result}" # set random name using random integer generator
-  resource_group_name = azurerm_resource_group.daniorg.name                   # set the name of the used resourece group
-  location            = azurerm_service_plan.danioappsp.location              # set the location of the service plan
-  service_plan_id     = azurerm_service_plan.danioappsp.id                    # set the id of the service plan
+resource "azurerm_linux_web_app" "danioazurewebapp" {                        # set name of the web app resource - danioazurewebapp
+  name                = "${var.app_service_name}${random_integer.ri.result}" # set random name using random integer generator
+  resource_group_name = azurerm_resource_group.daniorg.name                  # set the name of the used resourece group
+  location            = azurerm_resource_group.daniorg.location              # set the location of the service plan
+  service_plan_id     = azurerm_service_plan.danioappsp.id                   # set the id of the service plan
 
   site_config {
     application_stack {      # set app stack
@@ -47,6 +47,7 @@ resource "azurerm_linux_web_app" "danioazurewebapp" {                         # 
     name  = "DefaultConnection"
     type  = "SQLAzure"
     value = "Data Source=tcp:${azurerm_mssql_server.danio_sql.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_mssql_database.daniodb.name};User ID=${azurerm_mssql_server.danio_sql.administrator_login};Password=${azurerm_mssql_server.danio_sql.administrator_login_password};Trusted_Connection=False;MultipleActiveResultSets=True;"
+    #                           resource title    resource name  specific property
   }
 }
 
