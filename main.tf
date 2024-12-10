@@ -6,10 +6,10 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = "StorageRG"                # set the name of the resource group created with command for storage creation in Azure CLI
-    storage_account_name = "taskboardstoragedanio5"   # set the account name created with command for storage creation in Azure CLI
-    container_name       = "taskboardstoragedanio"    # set prefferef name for container
-    key                  = "terradorm.tfstate"        # set tfstate file
+    resource_group_name  = "StorageRG"                 # set the name of the resource group created with command for storage creation in Azure CLI
+    storage_account_name = "taskboardstoragedanio5"    # set the account name created with command for storage creation in Azure CLI
+    container_name       = "taskboardstoragecontainer" # set the name of the created container
+    key                  = "terradorm.tfstate"         # set tfstate file
   }
 }
 
