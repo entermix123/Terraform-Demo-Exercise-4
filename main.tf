@@ -52,7 +52,7 @@ resource "azurerm_linux_web_app" "danioazurewebapp" {                        # s
 }
 
 resource "azurerm_mssql_server" "danio_sql" {
-  name                         = var.sql_server_name
+  name                         = "${var.sql_server_name}${random_integer.ri.result}"
   resource_group_name          = azurerm_resource_group.daniorg.name
   location                     = azurerm_resource_group.daniorg.location
   version                      = "12.0"
@@ -61,7 +61,7 @@ resource "azurerm_mssql_server" "danio_sql" {
 }
 
 resource "azurerm_mssql_database" "daniodb" {
-  name           = var.sql_database_name
+  name           = "${var.sql_database_name}${random_integer.ri.result}"
   server_id      = azurerm_mssql_server.danio_sql.id
   collation      = "SQL_Latin1_General_CP1_CI_AS"
   license_type   = "LicenseIncluded"
